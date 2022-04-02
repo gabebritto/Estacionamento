@@ -77,7 +77,27 @@ public class Estacionamento {
 	}
 	
 	public void transferir(int vaga1,int vaga2) throws Exception{
-		
+		/*Desenvolver*/
+	}
+	
+	public String[] consultarGeral() {
+		/*Desenvolver*/
+		String[] situação = new String[1];
+		return situação;
+	}
+	
+	public int[] consultarLivre() {
+		/*Desenvolver*/
+		int [] livres = new int[1];
+		return livres;
+	}
+	
+	public void lerDados() {
+		/*Desenvolver*/
+	}
+	
+	public void gravarDados() {
+		/*Desenvolver*/
 	}
 	
 	public String[] getPlacas() {
