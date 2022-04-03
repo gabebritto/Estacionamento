@@ -1,3 +1,4 @@
+import java.util.Arrays;
 
 public class Estacionamento {
 	private String[] placas;
@@ -11,9 +12,14 @@ public class Estacionamento {
 		}
 	}
 
+	public int totalvagas() {
+		int totalDeVagas = this.placas.length;
+		return totalDeVagas;
+	}
+	
 	public boolean vagaExiste(int vaga) {
 		vaga = vaga - 1;
-		int totalDeVagas = this.placas.length;
+		int totalDeVagas = this.totalvagas();
 		if (vaga < 0 || vaga >= totalDeVagas) {
 			return false;
 		}
@@ -23,7 +29,7 @@ public class Estacionamento {
 	}
 	
 	public void entrar(String placa, int vaga) throws Exception {
-		int totalDeVagas = this.placas.length;
+		int totalDeVagas = this.totalvagas();
 		if (this.vagaExiste(vaga) == false) {
 			throw new Exception("Vaga inválida. Digite uma vaga entre 1 e "+totalDeVagas);
 		}
@@ -39,7 +45,7 @@ public class Estacionamento {
 	}
 	
 	public void sair(int vaga) throws Exception{
-		int totalDeVagas = this.placas.length;
+		int totalDeVagas = this.totalvagas();
 		if (this.vagaExiste(vaga) == false) {
 			throw new Exception("Vaga inválida. Digite uma vaga entre 1 e "+totalDeVagas);
 		}
@@ -66,7 +72,7 @@ public class Estacionamento {
 	}
 	
 	public String consultarVaga(int vaga) throws Exception {
-		int totalDeVagas = this.placas.length;
+		int totalDeVagas = this.totalvagas();
 		if (this.vagaExiste(vaga) == false) {
 			throw new Exception("Vaga inválida. Digite uma vaga entre 1 e "+totalDeVagas);
 		}
@@ -77,18 +83,47 @@ public class Estacionamento {
 	}
 	
 	public void transferir(int vaga1,int vaga2) throws Exception{
-		/*Desenvolver*/
+		int totalDeVagas = this.totalvagas();
+		if (this.vagaExiste(vaga1) == false || this.vagaExiste(vaga2) == false) {
+			throw new Exception("Vaga inválida. Digite uma vaga entre 1 e "+totalDeVagas);
+		}
+		else {
+			if (this.placas[vaga1-1] != null) {
+				if (this.placas[vaga2-1] == null) {
+					this.placas[vaga2-1] = this.placas[vaga1-1];
+					this.placas[vaga1-1] = null;
+				}
+				else {
+					throw new Exception("A vaga destino está ocupada.");
+				}
+			}
+		}
 	}
 	
 	public String[] consultarGeral() {
-		/*Desenvolver*/
-		String[] situação = new String[1];
-		return situação;
+		int totalDeVagas = this.totalvagas();
+		String[] situacao = new String[totalDeVagas];
+		for (int i=0; i<totalDeVagas; i++) {
+			if (this.placas[i] != null) {
+				situacao[i] = "ocupada";
+			}
+			else {
+				situacao[i] = "livre";
+			}
+		}
+		return situacao;
 	}
 	
 	public int[] consultarLivre() {
-		/*Desenvolver*/
-		int [] livres = new int[1];
+		int totalDeVagas = this.totalvagas();
+		int [] livres = new int[0];
+		for (int i=0; i < totalDeVagas; i++) {
+			if (this.placas[i] != null) {
+				int[] newLivre = Arrays.copyOf(livres, livres.length + 1); 
+				livres = newLivre;
+				livres[livres.length-1] = i + 1;
+			}
+		}
 		return livres;
 	}
 	
