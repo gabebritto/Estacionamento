@@ -97,6 +97,9 @@ public class Estacionamento {
 					throw new Exception("A vaga destino está ocupada.");
 				}
 			}
+			else {
+				throw new Exception("A vaga de origem está vazia.");
+			}
 		}
 	}
 	
@@ -118,7 +121,7 @@ public class Estacionamento {
 		int totalDeVagas = this.totalvagas();
 		int [] livres = new int[0];
 		for (int i=0; i < totalDeVagas; i++) {
-			if (this.placas[i] != null) {
+			if (this.placas[i] == null) {
 				int[] newLivre = Arrays.copyOf(livres, livres.length + 1); 
 				livres = newLivre;
 				livres[livres.length-1] = i + 1;
