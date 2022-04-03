@@ -63,11 +63,9 @@ public class Estacionamento {
 	public int consultarPlaca(String placa) {
 		for (int i = 0; i < this.placas.length; i++) {
 			if (this.placas[i] == placa) {
-				System.out.println(i+1);
 				return i+1;
 			}
 		}
-		System.out.println(-1);	
 		return -1;
 	}
 	

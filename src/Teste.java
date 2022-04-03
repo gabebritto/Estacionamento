@@ -1,7 +1,7 @@
 import java.util.Arrays;
 
 public class Teste {
-	public static void main (String[] args) {
+	public static void main (String[] args) throws Exception {
 		try {
 			int vaga;
 			String placa;
@@ -65,4 +65,5 @@ public class Teste {
 			System.out.println(e.getMessage());
 		}
 	}
-}	
+
+}
