@@ -1,4 +1,9 @@
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.Scanner;
 
 public class Estacionamento {
 	private String[] placas;
@@ -40,6 +45,8 @@ public class Estacionamento {
 			else {
 				/* Add to historico.csv*/
 				this.placas[vaga-1] = placa;
+				FileWriter entrada = new FileWriter( new File("historico.csv"), true);
+				entrada.write(new Date().toString()+";" + placa);
 			}
 		}
 	}
@@ -56,17 +63,19 @@ public class Estacionamento {
 			else {
 				/*Add exit to historico.csv*/
 				this.placas[vaga-1] = null;
+				FileWriter saida = new FileWriter( new File("historico.csv"), true);
+				saida.write(new Date().toString() + ";" + this.placas[vaga-1]);
 			}
 		}
 	}
 	
-	public int consultarPlaca(String placa) {
+	public int consultarPlaca(String placa) throws Exception{
 		for (int i = 0; i < this.placas.length; i++) {
 			if (this.placas[i] == placa) {
 				return i+1;
 			}
 		}
-		return -1;
+		throw new Exception("Placa não encontrada.");
 	}
 	
 	public String consultarVaga(int vaga) throws Exception {
@@ -75,7 +84,6 @@ public class Estacionamento {
 			throw new Exception("Vaga inválida. Digite uma vaga entre 1 e "+totalDeVagas);
 		}
 		else {
-			System.out.println(this.placas[vaga-1]);
 			return this.placas[vaga-1];
 			}
 	}
@@ -128,12 +136,45 @@ public class Estacionamento {
 		return livres;
 	}
 	
+	@SuppressWarnings("unused")
 	public void lerDados() {
-		/*Desenvolver*/
+		try {
+			String cabecalho, vagas, posicao, placa;
+			String[] dividir;
+			Scanner arquivo = new Scanner( new File("placas.csv"));
+			cabecalho = arquivo.nextLine();
+			
+			while (arquivo.hasNextLine()) {
+				vagas = arquivo.nextLine();
+				dividir = vagas.split(";");
+				posicao = dividir[0];
+				placa = dividir[1];
+				System.out.println("Vaga"+ posicao + " " + placa);
+			}
+		}
+		catch (IOException e){
+			System.out.println("Arquivo não encontrado.");
+		}
 	}
 	
 	public void gravarDados() {
-		/*Desenvolver*/
+		try {
+			int totalDeVagas = this.totalvagas();
+			FileWriter dados = new FileWriter( new File("placas.csv"), false);
+			dados.write("vaga;placa"+"\n");
+			for (int i=0; i < totalDeVagas; i++) {
+				
+				if (this.placas[i] != null) {
+					dados.write((i+1)+";"+this.placas[i]+"\n");
+				}
+				else {
+					dados.write((i+1)+";"+"Vazia"+"\n");
+				}
+			}
+			dados.close();
+		} catch (IOException e) {
+			System.out.println("Caminho não encontrado.");
+		}
 	}
 	
 	public String[] getPlacas() {
