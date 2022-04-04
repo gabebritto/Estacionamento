@@ -46,7 +46,8 @@ public class Estacionamento {
 				/* Add to historico.csv*/
 				this.placas[vaga-1] = placa;
 				FileWriter entrada = new FileWriter( new File("historico.csv"), true);
-				entrada.write(new Date().toString()+";" + placa);
+				entrada.write("Entrada"+ ";" + new Date().toString() + ";" + placa + "\n");
+				entrada.close();
 			}
 		}
 	}
@@ -62,9 +63,10 @@ public class Estacionamento {
 			}
 			else {
 				/*Add exit to historico.csv*/
-				this.placas[vaga-1] = null;
 				FileWriter saida = new FileWriter( new File("historico.csv"), true);
-				saida.write(new Date().toString() + ";" + this.placas[vaga-1]);
+				saida.write("Saida" + ";" +new Date().toString() + ";" + this.placas[vaga-1] + "\n");
+				this.placas[vaga-1] = null;
+				saida.close();
 			}
 		}
 	}
